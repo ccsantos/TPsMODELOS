@@ -5,8 +5,8 @@ import numpy as np
 import math
 from matplotlib.pylab import hist, show
 
-CORRIDAS = 10
-EXPERIMENTOS = 5
+CORRIDAS = 100
+EXPERIMENTOS = 60
 T_CORRIDA = 15
 
 ''' ----------------------------------- Funciones -------------------------------------------- '''

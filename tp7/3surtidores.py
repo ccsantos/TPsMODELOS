@@ -6,7 +6,7 @@ import math
 from matplotlib.pylab import hist, show
 
 CORRIDAS = 100
-EXPERIMENTOS = 60
+EXPERIMENTOS = 60   
 T_CORRIDA = 15
 
 ''' ----------------------------------- Funciones -------------------------------------------- '''
@@ -72,11 +72,6 @@ class Camion(object):
         return self.tiempo_atencion - self.tiempo_llegada
 
 ''' -------------------------------------------------------------------------------------------- '''
-def mostrar(lista):
-    print "mostrando lista, largo: ", len(lista)
-    for item in lista:
-        print item
-
 def get_camionesEnCola(eventos):
     return len(filter(lambda e: es_camion(e.objeto), eventos))
 
@@ -106,10 +101,10 @@ def main():
             reloj = 0.0
             atendidos = 0
             generados = 0
-            print ('CORRIDA Numero: ',j)
+            #print ('CORRIDA Numero: ',j)
             while (reloj <= T_CORRIDA):
                 numreloj = numreloj + 1
-                print('reloj numero: ',numreloj,'- dentro while',reloj)
+                #print('reloj numero: ',numreloj,'- dentro while',reloj)
                 camion = generar_camion(reloj)
                 generados = generados + 1
                 camionesgenerados = camionesgenerados + 1
@@ -149,7 +144,7 @@ def main():
             perdidoPorCorrida.append(generados - atendidos)
             generadosPorCorrida.append(generados)
             atendidosPorCorrida.append(atendidos)
-        
+        '''
         totalp = 0    
         for m in perdidoPorCorrida:
             totalp = totalp + m
@@ -164,6 +159,7 @@ def main():
         for m in atendidosPorCorrida:
             totala = totala + m
         print 'Atendidos por Experimento/Corridas: ', atendidosPorCorrida, ' - total: ', totala
+        '''
         promedios.append(np.average(tiempos_medios))
     
     f.close()
@@ -178,7 +174,6 @@ def main():
     cantsurt2 = 0 
     cantsurt3 = 0
     for c in cantatendidos:
-        print c
         if c.nombre == 'surtidor1':
             cantsurt1 = cantsurt1 + 1
         elif c.nombre == 'surtidor2':
@@ -186,6 +181,8 @@ def main():
         elif c.nombre == 'surtidor3':
             cantsurt3 = cantsurt3 + 1
 
+    print "-"*20+"[EJECUCION CON 3 SURTIDORES]"+"-"*20
+    
     print "-"*20+"[Estadisticas]"+"-"*20
     print "Experimentos: %d" % (EXPERIMENTOS)
     print "Ejecuciones: %d" % (CORRIDAS)
@@ -198,6 +195,7 @@ def main():
     print "Total Camiones Generados: ", camionesgenerados
     print "Total Camiones Atendidos: ", len(cantatendidos)
     print "Total Camiones Perdidos: ", camionesPerdidos
+    
     print "Maximo de Camiones en Cola: ", max(tams_cola)
     
     print "-"*20+"[Porcentaje de ocupacion por surtidor]"+"-"*20 
@@ -205,9 +203,9 @@ def main():
     print 'Camiones Atendidos Por Surtidor 2: ',cantsurt2, '- Ocupación: ', (cantsurt2*100)/len(cantatendidos),'%'
     print 'Camiones Atendidos Por Surtidor 3: ',cantsurt3, '- Ocupación: ', (cantsurt3*100)/len(cantatendidos),'%'
 
-    print "Promedios"
-    print promedios
-    hist(promedios, 5)
+    print 'Promedios: ', len(promedios)
+    print 'Lista de promedios por Experimento: ', promedios
+    hist(promedios, len(promedios))
     show()
 
 if __name__ == '__main__':

@@ -10,7 +10,6 @@ EXPERIMENTOS = 60
 T_CORRIDA = 15
 
 ''' ----------------------------------- Funciones -------------------------------------------- '''
-
 def agregar_evento(eventos, evento):
     eventos.append(evento)
     eventos.sort(key=lambda e: e.tiempo)
@@ -70,12 +69,6 @@ class Camion(object):
         return self.tiempo_atencion - self.tiempo_llegada
 
 ''' -------------------------------------------------------------------------------------------- '''
-
-def mostrar(lista):
-    print "mostrando lista, largo: ", len(lista)
-    for item in lista:
-        print item
-
 def get_camionesEnCola(eventos):
     return len(filter(lambda e: es_camion(e.objeto), eventos))
 
@@ -107,10 +100,10 @@ def main():
             reloj = 0.0
             atendidos = 0
             generados = 0
-            print ('CORRIDA Numero: ',j)
+            #print ('CORRIDA Numero: ',j)
             while (reloj <= T_CORRIDA):
                 numreloj = numreloj + 1
-                print('reloj numero: ',numreloj,'- dentro while',reloj)
+                #print('reloj numero: ',numreloj,'- dentro while',reloj)
                 camion = generar_camion(reloj)
                 generados = generados + 1
                 camionesgenerados = camionesgenerados + 1
@@ -150,7 +143,7 @@ def main():
             perdidoPorCorrida.append(generados - atendidos)
             generadosPorCorrida.append(generados)
             atendidosPorCorrida.append(atendidos)
-        
+        '''
         totalp = 0    
         for m in perdidoPorCorrida:
             totalp = totalp + m
@@ -165,8 +158,9 @@ def main():
         for m in atendidosPorCorrida:
             totala = totala + m
         print 'Atendidos por Experimento/Corridas: ', atendidosPorCorrida, ' - total: ', totala
+        '''
         promedios.append(np.average(tiempos_medios))
-    
+        
     f.close()
     media = np.average(promedios)
     std = np.std(promedios)
@@ -180,7 +174,6 @@ def main():
     cantsurt3 = 0
     cantsurt4 = 0
     for c in cantatendidos:
-        print c
         if c.nombre == 'surtidor1':
             cantsurt1 = cantsurt1 + 1
         elif c.nombre == 'surtidor2':
@@ -190,6 +183,8 @@ def main():
         elif c.nombre == 'surtidor4':
             cantsurt4 = cantsurt4 + 1
 
+    print "-"*20+"[EJECUCION CON 4 SURTIDORES]"+"-"*20
+    
     print "-"*20+"[Estadisticas]"+"-"*20
     print "Experimentos: %d" % (EXPERIMENTOS)
     print "Ejecuciones: %d" % (CORRIDAS)
@@ -209,11 +204,10 @@ def main():
     print 'Camiones Atendidos Por Surtidor 2: ',cantsurt2, '- Ocupación: ', (cantsurt2*100)/len(cantatendidos),'%'
     print 'Camiones Atendidos Por Surtidor 3: ',cantsurt3, '- Ocupación: ', (cantsurt3*100)/len(cantatendidos),'%'
     print 'Camiones Atendidos Por Surtidor 4: ',cantsurt4, '- Ocupación: ', (cantsurt4*100)/len(cantatendidos),'%'
-
-    print "Promedios"
-    print promedios
-    hist(promedios, 5)
+    
+    print 'Promedios: ', len(promedios)
+    print 'Lista de promedios por Experimento: ', promedios
+    hist(promedios, len(promedios))
     show()
-
 if __name__ == '__main__':
     main()
